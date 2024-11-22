@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+}
+
+#spaceship {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 40px solid white;
+  transition: transform 0.1s ease;
+}
+
+.bullet {
+  position: absolute;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid white;
+}
