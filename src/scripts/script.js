@@ -52,9 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateSpaceshipPosition() {
+    let isMoving = false;
     if (keys["a"] || keys["A"]) {
       spaceshipX = Math.max(0, spaceshipX - spaceshipSpeed);
       spaceship.style.transform = `translate(-50%, -50%) rotate(-10deg)`;
+      isMoving = true;
     }
     if (keys["d"] || keys["D"]) {
       spaceshipX = Math.min(
@@ -62,9 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
         spaceshipX + spaceshipSpeed
       );
       spaceship.style.transform = `translate(-50%, -50%) rotate(10deg)`;
+      isMoving = true;
     }
     if (!keys["a"] && !keys["A"] && !keys["d"] && !keys["D"]) {
       spaceship.style.transform = `translate(-50%, -50%) rotate(0deg)`;
+    }
+    if (isMoving) {
+      spaceship.classList.add("moving");
+    } else {
+      spaceship.classList.remove("moving");
     }
     moveSpaceship();
   }
