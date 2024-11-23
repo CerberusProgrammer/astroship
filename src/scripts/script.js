@@ -1,30 +1,13 @@
+import { createStar, moveStars } from "./stars.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const spaceship = document.getElementById("spaceship");
   const gameContainer = document.getElementById("game-container");
-  const starsContainer = document.getElementById("stars");
   let spaceshipX = gameContainer.clientWidth / 2;
   const spaceshipSpeed = 5;
   const bulletSpeed = 5;
   const bullets = [];
   let keys = {};
-
-  function createStars() {
-    for (let i = 0; i < 200; i++) {
-      const star = document.createElement("div");
-      star.classList.add("star");
-      const sizeClass =
-        Math.random() < 0.7
-          ? "small"
-          : Math.random() < 0.9
-          ? "medium"
-          : "large";
-      star.classList.add(sizeClass);
-      star.style.left = `${Math.random() * 100}vw`;
-      star.style.top = `${Math.random() * 100}vh`;
-      star.style.animationDuration = `${Math.random() * 2 + 1}s`;
-      starsContainer.appendChild(star);
-    }
-  }
 
   function moveSpaceship() {
     spaceship.style.left = `${spaceshipX}px`;
@@ -91,10 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
   function gameLoop() {
     updateSpaceshipPosition();
     updateBullets();
+    moveStars();
+    if (Math.random() < 0.05) {
+      createStar();
+    }
     requestAnimationFrame(gameLoop);
   }
 
-  createStars();
   moveSpaceship();
   gameLoop();
 });
