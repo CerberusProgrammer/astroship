@@ -30,7 +30,6 @@ body {
     background-position: 0% 50%;
   }
 }
-
 #stars {
   position: absolute;
   width: 100%;
@@ -43,7 +42,6 @@ body {
   position: absolute;
   background: white;
   border-radius: 50%;
-  animation: twinkle 2s infinite;
 }
 
 .star.small {
