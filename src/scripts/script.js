@@ -5,17 +5,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameContainer = document.getElementById("game-container");
   let spaceshipX = gameContainer.clientWidth / 2;
   const spaceshipSpeed = 5;
-  const bulletSpeed = 5;
+  const bulletSpeed = 15;
+  const enemyBulletSpeed = 5;
   const bullets = [];
   const bulletPool = [];
   const enemies = [];
   const enemyBullets = [];
   let keys = {};
   let lastShotTime = 0;
-  const shotCooldown = 500;
-  const maxEnemies = 5;
+  const shotCooldown = 300;
+  const maxEnemies = 4;
   let lastEnemySpawnTime = 0;
-  const enemySpawnCooldown = 6000;
+  const enemySpawnCooldown = 8000;
 
   function moveSpaceship() {
     spaceship.style.left = `${spaceshipX}px`;
@@ -105,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bullet.remove();
         enemyBullets.splice(index, 1);
       } else {
-        bullet.style.top = `${bulletTop + bulletSpeed}px`;
+        bullet.style.top = `${bulletTop + enemyBulletSpeed}px`;
       }
     });
   }
@@ -222,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentTime = Date.now();
     if (
       enemies.length < maxEnemies &&
-      currentTime - lastEnemySpawnTime >= enemySpawnCooldown
+      currentTime - lastEnemySpawnTime >= enemySpawnCooldown * enemies.length
     ) {
       createEnemy();
       lastEnemySpawnTime = currentTime;
