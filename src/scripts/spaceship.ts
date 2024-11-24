@@ -17,6 +17,9 @@ export class Spaceship {
 
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     document.addEventListener("keyup", (event) => this.handleKeyUp(event));
+    document.addEventListener("touchstart", (event) =>
+      this.handleTouchStart(event)
+    );
   }
 
   move() {
@@ -65,6 +68,25 @@ export class Spaceship {
 
   private handleKeyUp(event: KeyboardEvent) {
     this.keys[event.key] = false;
+  }
+
+  private handleTouchStart(event: TouchEvent) {
+    const touchX = event.touches[0].clientX;
+    const screenWidth = window.innerWidth;
+
+    if (touchX < screenWidth / 2) {
+      this.x = Math.max(0, this.x - this.speed - 20);
+      this.element.style.transform = `translate(-50%, -50%) rotate(-10deg)`;
+    } else {
+      this.x = Math.min(
+        this.gameContainer.clientWidth - 40,
+        this.x + this.speed + 20
+      );
+      this.element.style.transform = `translate(-50%, -50%) rotate(10deg)`;
+    }
+
+    this.shoot();
+    this.move();
   }
 
   updatePosition() {
