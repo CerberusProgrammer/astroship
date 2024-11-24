@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
           spaceship.bulletPool.push(bullet);
           enemy.health -= 1;
           if (enemy.health <= 0) {
-            enemy.element.remove();
+            enemy.remove();
             enemies.splice(enemyIndex, 1);
             createEnemy();
           }
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     spaceship.bullets.forEach((bullet) => bullet.remove());
     spaceship.bullets.length = 0;
     spaceship.bulletPool.length = 0;
-    enemies.forEach((enemy) => enemy.element.remove());
+    enemies.forEach((enemy) => enemy.remove());
     enemies.length = 0;
     spaceship.x = gameContainer.clientWidth / 2;
     spaceship.move();
