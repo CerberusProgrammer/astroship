@@ -67,3 +67,7 @@ body {
   height: 4px;
   background: red;
 }
+
+.polygon-enemy {
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
