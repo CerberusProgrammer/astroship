@@ -9,18 +9,13 @@ export class Enemy {
   bulletPool: Bullet[] = [];
   direction: string;
 
-  constructor(private gameContainer: HTMLDivElement) {
+  constructor(protected gameContainer: HTMLDivElement) {
     this.element = document.createElement("div");
     this.element.classList.add("enemy");
-    const size = Math.random() * 30 + 20;
-    this.element.style.width = `${size}px`;
-    this.element.style.height = `${size}px`;
-    this.element.style.left = `${Math.random() * (gameContainer.clientWidth - size)}px`;
-    this.element.style.top = "0px";
-    this.health = Math.ceil(size / 10);
-    this.direction = Math.random() < 0.5 ? "left" : "right";
+    this.health = 1;
     this.speed = 2;
     this.bulletSpeed = 5;
+    this.direction = Math.random() < 0.5 ? "left" : "right";
     gameContainer.appendChild(this.element);
   }
 
@@ -61,7 +56,7 @@ export class Enemy {
     });
   }
 
-  private getBullet(): Bullet {
+  protected getBullet(): Bullet {
     let bullet: Bullet;
     if (this.bulletPool.length > 0) {
       bullet = this.bulletPool.pop()!;
@@ -78,5 +73,71 @@ export class Enemy {
     this.bullets.forEach((bullet) => bullet.remove());
     this.bullets.length = 0;
     this.element.remove();
+  }
+}
+
+export class PolygonEnemy extends Enemy {
+  isEntering: boolean;
+
+  constructor(gameContainer: HTMLDivElement, sides: number) {
+    super(gameContainer);
+    this.element.classList.add("polygon-enemy");
+    this.element.style.width = `${sides * 10}px`;
+    this.element.style.height = `${sides * 10}px`;
+    this.element.style.left = `${Math.random() * (gameContainer.clientWidth - sides * 10)}px`;
+    this.element.style.top = `-${sides * 10}px`; // Start above the screen
+    this.health = sides;
+    this.speed = 2;
+    this.bulletSpeed = 5 * (sides / 3);
+    this.element.style.backgroundColor = this.getRandomColor();
+    this.createPolygon(sides);
+    this.isEntering = true;
+  }
+
+  private createPolygon(sides: number) {
+    const size = parseInt(this.element.style.width);
+    const angle = (2 * Math.PI) / sides;
+    const points = Array.from({ length: sides }, (_, i) => {
+      const x = size / 2 + (size / 2) * Math.cos(i * angle - Math.PI / 2);
+      const y = size / 2 + (size / 2) * Math.sin(i * angle - Math.PI / 2);
+      return `${x}px ${y}px`;
+    }).join(", ");
+    this.element.style.clipPath = `polygon(${points})`;
+  }
+
+  private getRandomColor() {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  move() {
+    if (this.isEntering) {
+      const currentTop = parseInt(this.element.style.top);
+      const newTop = currentTop + this.speed;
+      if (newTop >= 10) {
+        this.element.style.top = "10px";
+        this.isEntering = false;
+      } else {
+        this.element.style.top = `${newTop}px`;
+      }
+    } else {
+      super.move();
+    }
+  }
+
+  shoot() {
+    if (!this.isEntering && Math.random() < 0.01 * (this.health / 3)) {
+      const bullet = this.getBullet();
+      bullet.style.left = `${parseInt(this.element.style.left) + parseInt(this.element.style.width) / 2 - 2}px`;
+      bullet.style.top = `${parseInt(this.element.style.top) + parseInt(this.element.style.height)}px`;
+      bullet.style.width = `${this.health * 2}px`;
+      bullet.style.height = `${this.health * 2}px`;
+      this.gameContainer.appendChild(bullet);
+      this.bullets.push(bullet);
+    }
   }
 }
