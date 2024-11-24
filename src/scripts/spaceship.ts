@@ -17,8 +17,9 @@ export class Spaceship {
 
     document.addEventListener("keydown", (event) => this.handleKeyDown(event));
     document.addEventListener("keyup", (event) => this.handleKeyUp(event));
-    document.addEventListener("touchstart", (event) =>
-      this.handleTouchStart(event)
+    document.addEventListener("touchstart", () => this.shoot());
+    window.addEventListener("deviceorientation", (event) =>
+      this.handleDeviceOrientation(event)
     );
   }
 
@@ -70,23 +71,23 @@ export class Spaceship {
     this.keys[event.key] = false;
   }
 
-  private handleTouchStart(event: TouchEvent) {
-    const touchX = event.touches[0].clientX;
-    const screenWidth = window.innerWidth;
-
-    if (touchX < screenWidth / 2) {
-      this.x = Math.max(0, this.x - this.speed - 20);
-      this.element.style.transform = `translate(-50%, -50%) rotate(-10deg)`;
-    } else {
-      this.x = Math.min(
-        this.gameContainer.clientWidth - 40,
-        this.x + this.speed + 20
-      );
-      this.element.style.transform = `translate(-50%, -50%) rotate(10deg)`;
+  private handleDeviceOrientation(event: DeviceOrientationEvent) {
+    const gamma = event.gamma;
+    if (gamma !== null) {
+      if (gamma < -5) {
+        this.x = Math.max(0, this.x - this.speed);
+        this.element.style.transform = `translate(-50%, -50%) rotate(-10deg)`;
+      } else if (gamma > 5) {
+        this.x = Math.min(
+          this.gameContainer.clientWidth - 40,
+          this.x + this.speed
+        );
+        this.element.style.transform = `translate(-50%, -50%) rotate(10deg)`;
+      } else {
+        this.element.style.transform = `translate(-50%, -50%) rotate(0deg)`;
+      }
+      this.move();
     }
-
-    this.shoot();
-    this.move();
   }
 
   updatePosition() {
