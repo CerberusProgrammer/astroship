@@ -1,5 +1,5 @@
 import { Spaceship } from "./spaceship";
-import { Enemy } from "./enemy";
+import { PolygonEnemy } from "./enemy";
 import { createStar, moveStars } from "./stars";
 import { isPointInTriangle } from "../utils/isPointInTriangle";
 
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "game-container"
   ) as HTMLDivElement;
   const spaceship = new Spaceship(gameContainer);
-  const enemies: Enemy[] = [];
+  const enemies: PolygonEnemy[] = [];
   const maxEnemies = 4;
   const enemySpawnCooldown = 8000;
   let lastEnemySpawnTime = 0;
@@ -101,7 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function createEnemy() {
-    const enemy = new Enemy(gameContainer);
+    const sides = Math.floor(Math.random() * 13) + 3; // Random number of sides between 3 and 15
+    const enemy = new PolygonEnemy(gameContainer, sides);
     enemies.push(enemy);
   }
 
