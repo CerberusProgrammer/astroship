@@ -73,4 +73,10 @@ export class Enemy {
     }
     return bullet;
   }
+
+  remove() {
+    this.bullets.forEach((bullet) => bullet.remove());
+    this.bullets.length = 0;
+    this.element.remove();
+  }
 }
