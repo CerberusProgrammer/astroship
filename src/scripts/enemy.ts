@@ -85,7 +85,7 @@ export class PolygonEnemy extends Enemy {
     this.element.style.width = `${sides * 10}px`;
     this.element.style.height = `${sides * 10}px`;
     this.element.style.left = `${Math.random() * (gameContainer.clientWidth - sides * 10)}px`;
-    this.element.style.top = `-${sides * 10}px`; // Start above the screen
+    this.element.style.top = `-${sides * 10}px`;
     this.health = sides;
     this.speed = 2;
     this.bulletSpeed = 5 * (sides / 3);
@@ -106,12 +106,8 @@ export class PolygonEnemy extends Enemy {
   }
 
   private getRandomColor() {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
+    const colors = ["#ff4081", "#3f51b5", "#ffeb3b", "#ff5722", "#4caf50"];
+    return colors[Math.floor(Math.random() * colors.length)];
   }
 
   move() {
@@ -139,5 +135,12 @@ export class PolygonEnemy extends Enemy {
       this.gameContainer.appendChild(bullet);
       this.bullets.push(bullet);
     }
+  }
+
+  takeDamage() {
+    this.element.classList.add("damage-pulse");
+    setTimeout(() => {
+      this.element.classList.remove("damage-pulse");
+    }, 200);
   }
 }
