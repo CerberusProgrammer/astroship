@@ -1,7 +1,9 @@
-const starsContainer = document.getElementById("stars");
-const stars = [];
+const starsContainer = document.getElementById("stars") as HTMLDivElement;
+const stars: HTMLDivElement[] = [];
 const maxStars = 200;
-const gameContainer = document.getElementById("game-container");
+const gameContainer = document.getElementById(
+  "game-container"
+) as HTMLDivElement;
 
 export function createStar() {
   if (stars.length >= maxStars) return;
