@@ -1,4 +1,5 @@
 import { createStar, moveStars } from "./stars.js";
+import { isPointInTriangle } from "../utils/isPointInTriangle.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const spaceship = document.getElementById("spaceship");
@@ -17,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const maxEnemies = 4;
   let lastEnemySpawnTime = 0;
   const enemySpawnCooldown = 8000;
+  const trianglePoints = [
+    { x: 0, y: -20 },
+    { x: -20, y: 20 },
+    { x: 20, y: 20 },
+  ];
 
   function moveSpaceship() {
     spaceship.style.left = `${spaceshipX}px`;
@@ -138,12 +144,31 @@ document.addEventListener("DOMContentLoaded", () => {
     enemyBullets.forEach((bullet, bulletIndex) => {
       const bulletRect = bullet.getBoundingClientRect();
       const spaceshipRect = spaceship.getBoundingClientRect();
+      const bulletX = bulletRect.left + bulletRect.width / 2;
+      const bulletY = bulletRect.top + bulletRect.height / 2;
+
+      const shipCenterX = spaceshipRect.left + spaceshipRect.width / 2;
+      const shipCenterY = spaceshipRect.top + spaceshipRect.height / 2;
+
+      const absolutePoints = trianglePoints.map((point) => ({
+        x: point.x + shipCenterX,
+        y: point.y + shipCenterY,
+      }));
+
       if (
-        bulletRect.left < spaceshipRect.right &&
-        bulletRect.right > spaceshipRect.left &&
-        bulletRect.top < spaceshipRect.bottom &&
-        bulletRect.bottom > spaceshipRect.top
+        isPointInTriangle(
+          bulletX,
+          bulletY,
+          absolutePoints[0].x,
+          absolutePoints[0].y,
+          absolutePoints[1].x,
+          absolutePoints[1].y,
+          absolutePoints[2].x,
+          absolutePoints[2].y
+        )
       ) {
+        bullet.remove();
+        enemyBullets.splice(bulletIndex, 1);
         resetGame();
       }
     });
