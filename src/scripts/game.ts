@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
           bullet.style.display = "none";
           spaceship.bullets.splice(bulletIndex, 1);
           spaceship.bulletPool.push(bullet);
+          enemy.takeDamage();
           enemy.health -= 1;
           if (enemy.health <= 0) {
             enemy.remove();
