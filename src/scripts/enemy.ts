@@ -72,6 +72,17 @@ export class Enemy {
   remove() {
     this.bullets.forEach((bullet) => bullet.remove());
     this.bullets.length = 0;
+
+    const explosion = document.createElement("div");
+    explosion.classList.add("explosion");
+    explosion.style.left = `${parseInt(this.element.style.left) + parseInt(this.element.style.width) / 2 - 25}px`;
+    explosion.style.top = `${parseInt(this.element.style.top) + parseInt(this.element.style.height) / 2 - 25}px`;
+    this.gameContainer.appendChild(explosion);
+
+    setTimeout(() => {
+      explosion.remove();
+    }, 1000);
+
     this.element.remove();
   }
 }
