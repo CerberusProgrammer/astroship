@@ -1,7 +1,7 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: #121212;
+  background: #251a40;
   font-family: "Roboto", sans-serif;
 }
 
@@ -9,7 +9,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(120deg, #ff4081, #3f51b5);
+  background: linear-gradient(120deg, #2b1e48, #0f1013);
   background-size: 400% 400%;
   animation: moveBackground 60s ease infinite;
 }
@@ -30,7 +30,7 @@ body {
   position: absolute;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-bottom: 10px solid #ffeb3b;
+  border-bottom: 10px solid #bda865;
 }
 
 .enemy {
@@ -43,7 +43,7 @@ body {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: #ff5722;
+  background: #ce767c;
 }
 
 .polygon-enemy {
@@ -57,9 +57,30 @@ body {
 
 @keyframes damage-pulse {
   0% {
-    background-color: #f44336;
+    background-color: #bf3255;
   }
   100% {
     background-color: initial;
   }
+}
+
+@keyframes explosion {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(10);
+    opacity: 0;
+  }
+}
+
+.explosion {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, #98304c, #912c43, #465db2);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: explosion 1s ease-out forwards;
 }
