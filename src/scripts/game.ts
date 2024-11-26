@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const enemySpawnCooldown = 8000;
   let lastEnemySpawnTime = 0;
   const trianglePoints = [
-    { x: 0, y: -20 },
-    { x: -20, y: 20 },
-    { x: 20, y: 20 },
+    { x: 0, y: -40 },
+    { x: -40, y: 40 },
+    { x: 40, y: 40 },
   ];
 
   function detectCollisions() {
