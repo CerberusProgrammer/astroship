@@ -1,0 +1,64 @@
+.enemy {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: var(--enemy-color, #f44336);
+  border-radius: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+.enemy .body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--enemy-body-color, #f44336);
+  border-radius: 10%;
+}
+
+.enemy .wing {
+  position: absolute;
+  width: 20px;
+  height: 40px;
+  background: var(--enemy-wing-color, #ff5722);
+  border-radius: 10%;
+  top: 10px;
+}
+
+.enemy .wing.left {
+  left: -10px;
+  transform: rotate(-30deg);
+}
+
+.enemy .wing.right {
+  right: -10px;
+  transform: rotate(30deg);
+}
+
+.enemy .cockpit {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: var(--enemy-cockpit-color, #ffffff);
+  border-radius: 50%;
+  top: 10px;
+}
+
+.enemy .gun {
+  position: absolute;
+  width: 10px;
+  height: 20px;
+  background: var(--enemy-gun-color, #000000);
+  top: 40px;
+}
+
+.enemy .gun.left {
+  left: 10px;
+}
+
+.enemy .gun.right {
+  right: 10px;
+}
