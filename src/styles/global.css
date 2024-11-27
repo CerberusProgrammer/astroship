@@ -35,8 +35,6 @@ body {
 
 .enemy {
   position: absolute;
-  background: #f44336;
-  border-radius: 50%;
 }
 
 .enemy-bullet {
