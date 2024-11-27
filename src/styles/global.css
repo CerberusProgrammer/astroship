@@ -52,15 +52,21 @@ body {
 }
 
 .damage-pulse {
-  animation: damage-pulse 0.3s ease-in-out;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, #98304c, #912c43, #465db2);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: damage-pulse 500ms ease-out forwards;
 }
 
 @keyframes damage-pulse {
   0% {
-    background-color: #bf3255;
+    transform: scale(1);
   }
   100% {
-    background-color: initial;
+    transform: scale(1.2);
   }
 }
 
@@ -82,5 +88,5 @@ body {
   background: radial-gradient(circle, #98304c, #912c43, #465db2);
   border-radius: 50%;
   pointer-events: none;
-  animation: explosion 1s ease-out forwards;
+  animation: explosion 500ms ease-out forwards;
 }
