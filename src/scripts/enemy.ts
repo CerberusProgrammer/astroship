@@ -1,4 +1,5 @@
 import type { Bullet } from "./bullet";
+import "../components/enemy.css";
 
 export class Enemy {
   element: HTMLDivElement;
@@ -92,7 +93,16 @@ export class PolygonEnemy extends Enemy {
 
   constructor(gameContainer: HTMLDivElement, sides: number) {
     super(gameContainer);
-    this.element.classList.add("polygon-enemy");
+    this.element.classList.add("enemy");
+    this.element.innerHTML = `
+    <div class="enemy">
+  <div class="body"></div>
+  <div class="wing left"></div>
+  <div class="wing right"></div>
+  <div class="cockpit"></div>
+  <div class="gun left"></div>
+  <div class="gun right"></div>
+</div>`;
     this.element.style.width = `${sides * 10}px`;
     this.element.style.height = `${sides * 10}px`;
     this.element.style.left = `${Math.random() * (gameContainer.clientWidth - sides * 10)}px`;
@@ -101,7 +111,7 @@ export class PolygonEnemy extends Enemy {
     this.speed = 2;
     this.bulletSpeed = 5 * (sides / 3);
     this.element.style.backgroundColor = this.getRandomColor();
-    this.createPolygon(sides);
+    // this.createPolygon(sides);a
     this.isEntering = true;
   }
 

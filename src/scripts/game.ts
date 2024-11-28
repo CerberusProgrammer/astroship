@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function createEnemy() {
-    const sides = Math.floor(Math.random() * 13) + 3; // Random number of sides between 3 and 15
+    const sides = Math.floor(Math.random() * 13) + 3;
     const enemy = new PolygonEnemy(gameContainer, sides);
     enemies.push(enemy);
   }
